@@ -2,15 +2,24 @@
   "name": "password_manager",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "example_yargs.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon example_yargs.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MDP-Internship/password-manager-nodeJS.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MDP-Internship/password-manager-nodeJS/issues"
+  },
+  "homepage": "https://github.com/MDP-Internship/password-manager-nodeJS#readme",
   "dependencies": {
-    "node-persist": "^3.1.0",
-    "nodemon": "^2.0.6"
+    "node-persist": "0.0.6",
+    "nodemon": "^2.0.6",
+    "yargs": "^3.15.0"
   }
 }
