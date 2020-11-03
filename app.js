@@ -50,48 +50,9 @@ var argv = require("yargs")
       .help("help");
   })
   .help("help").argv;
-storage.initSync();
-var command = argv._[0];
+storage.initSync(); // node-persist initialize ediliyor.
+var command = argv._[0]; //terminal üzerinden yazdığımz komutu alıyoruz.
 console.log(command);
-
-if (
-  command === "create" &&
-  typeof argv.name !== "undefined" &&
-  argv.name.length > 0 &&
-  typeof argv.username !== "undefined" &&
-  argv.username.length > 0 &&
-  typeof argv.password !== "undefined" &&
-  argv.password.length > 0 &&
-  typeof argv.masterPassword !== "undefined" &&
-  argv.masterPassword.length > 0
-) {
-  createAccount(
-    {
-      name: argv.name,
-      username: argv.username,
-      password: argv.password,
-    },
-    argv.masterPassword
-  );
-
-  console.log("Hesap Oluşturuldu...");
-} else if (
-  command === "get" &&
-  typeof argv.name !== "undefined" &&
-  argv.name.length > 0 &&
-  typeof argv.masterPassword !== "undefined" &&
-  argv.masterPassword.length > 0
-) {
-  var account = matchAccount(argv.name, argv.masterPassword);
-  console.log(account);
-  if (typeof account !== "undefined") {
-    console.log(account);
-  } else {
-    console.log("Aradığınız kayıt bulunamamıştır...");
-  }
-} else {
-  console.log("lütfen geçerli bir komut giriniz");
-}
 
 function createAccount(account, masterPassword) {
   var getAccountObject = getAccounts(masterPassword);
@@ -148,6 +109,52 @@ function matchAccount(accountName, masterPassword) {
     }
   });
   return matchedAccount;
+}
+
+if (
+  command === "create" &&
+  typeof argv.name !== "undefined" &&
+  argv.name.length > 0 &&
+  typeof argv.username !== "undefined" &&
+  argv.username.length > 0 &&
+  typeof argv.password !== "undefined" &&
+  argv.password.length > 0 &&
+  typeof argv.masterPassword !== "undefined" &&
+  argv.masterPassword.length > 0
+) {
+  try {
+    createAccount(
+      {
+        name: argv.name,
+        username: argv.username,
+        password: argv.password,
+      },
+      argv.masterPassword
+    );
+    console.log("Hesap Oluşturuldu...");
+  } catch (error) {
+    console.log("hesap oluşturulurken hata oluştu hata kodu " + error);
+  }
+} else if (
+  command === "get" &&
+  typeof argv.name !== "undefined" &&
+  argv.name.length > 0 &&
+  typeof argv.masterPassword !== "undefined" &&
+  argv.masterPassword.length > 0
+) {
+  try {
+    var account = matchAccount(argv.name, argv.masterPassword);
+    console.log(account);
+    if (typeof account !== "undefined") {
+      console.log(account);
+    } else {
+      console.log("Aradığınız kayıt bulunamamıştır...");
+    }
+  } catch (error) {
+    console.log("hesap getirilemedi");
+  }
+} else {
+  console.log("lütfen geçerli bir komut giriniz");
 }
 
 /* createAccount({
